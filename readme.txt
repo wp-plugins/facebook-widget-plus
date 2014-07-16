@@ -1,4 +1,4 @@
-=== Atom Twitter Feeds ===
+=== Facebook Widget Plus ===
 
 Plugin URI: http://www.sdghouston.com
 Author Name : Muhammad Riduan
