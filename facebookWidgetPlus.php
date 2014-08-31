@@ -1,11 +1,11 @@
 <?php
 /**
- * @package facebook-widget-plus
+* @package facebook-widget-plus
 */
 /*
 Plugin Name: Facebook Widget Plus
 Plugin URI: http://www.sdghouston.com
-Description: Thanks for installing Facebook Widget Plus
+Description: Thanks for installing Facebook Widget Plus. Get the custom options in facebook on your wordpress website
 Version: 1.0
 Author: Muhammad Riduan
 Author URI: http://www.sdghouston.com
@@ -241,8 +241,8 @@ class FacebookWidgetPlus extends WP_Widget{
                data-stream="false" 
              <?php };?>
         </div>
-	
-    </div>
+	</div>
+	<div class="support" style="font-size: 9px; text-align: right; position: relative; top: -10px;"><a href="//www.hawaiidrive-o.com" title="Click here" target="_blank">HawaiiDrive-O.com</a></div>
 <?php
         echo $after_widget;
     }
