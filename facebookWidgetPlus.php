@@ -73,15 +73,7 @@ class FacebookWidgetPlus extends WP_Widget{
 	name="<?php echo $this->get_field_name('height');?>"
         value="<?php echo !empty($height) ? $height : "600"; ?>" />
 </p>
-<p>
-    <label for="<?php echo $this->get_field_id( 'color_scheme' ); ?>">Color Scheme:</label> 
-    <select id="<?php echo $this->get_field_id( 'color_scheme' ); ?>"
-        name="<?php echo $this->get_field_name( 'color_scheme' ); ?>"
-        class="widefat" style="width:100%;">
-            <option value="0" <?php if ($color_scheme == '0') echo 'selected="0"'; ?> >Light</option>
-            <option value="1" <?php if ($color_scheme == '1') echo 'selected="1"'; ?> >Dark</option>	
-    </select>
-</p>
+
 <p>
     <label for="<?php echo $this->get_field_id( 'face' ); ?>">Show Faces:</label> 
     <select id="<?php echo $this->get_field_id( 'face' ); ?>"
@@ -92,23 +84,15 @@ class FacebookWidgetPlus extends WP_Widget{
     </select>
 </p>
 <p>
-    <label for="<?php echo $this->get_field_id( 'header' ); ?>">Show Header:</label> 
+    <label for="<?php echo $this->get_field_id( 'header' ); ?>">Hide Cover:</label> 
     <select id="<?php echo $this->get_field_id( 'header' ); ?>"
         name="<?php echo $this->get_field_name( 'header' ); ?>"
         class="widefat" style="width:100%;">
-            <option value="true" <?php if ($face == 'header') echo 'selected="header"'; ?> >Yes</option>
-            <option value="false" <?php if ($face == 'header') echo 'selected="header"'; ?> >No</option>	
+            <option value="false" <?php if ($face == 'header') echo 'selected="header"'; ?> >No</option>
+            <option value="true" <?php if ($face == 'header') echo 'selected="header"'; ?> >Yes</option>	
     </select>
 </p>
-<p>
-    <label for="<?php echo $this->get_field_id( 'border' ); ?>">Show Border:</label> 
-    <select id="<?php echo $this->get_field_id( 'border' ); ?>"
-        name="<?php echo $this->get_field_name( 'border' ); ?>"
-        class="widefat" style="width:100%;">
-            <option value="true" <?php if ($border == 'true') echo 'selected="true"'; ?> >Yes</option>
-            <option value="false" <?php if ($border == 'false') echo 'selected="false"'; ?> >No</option>	
-    </select>
-</p>
+
 <p>
     <label for="<?php echo $this->get_field_id( 'post' ); ?>">Show Post:</label> 
     <select id="<?php echo $this->get_field_id( 'post' ); ?>"
@@ -168,14 +152,12 @@ class FacebookWidgetPlus extends WP_Widget{
         extract($instance);
         $title = apply_filters('widget_title', $title);
         $description = apply_filters('widget_description', $description);
-	if(empty($title)) $title = "Facebook Widget Plus";
+		if(empty($title)) $title = "Facebook Widget Plus";
         if(empty($fb_url)) $fb_url = "http://www.facebook.com/FacebookDevelopers";
         if(empty($width)) $width = "300";
         if(empty($height)) $height = "600";
-        if(empty($color_scheme)) $color_scheme = "0";
         if(empty($face)) $face = "true";
-        if(empty($header)) $header = "true";
-        if(empty($border)) $border = "true";
+        if(empty($header) || $header == '') $header = "false";
         if(empty($post)) $post = "true";
         if(empty($backgroundColor)) $backgroundColor = "#1e9f75";
         if(empty($margin_css)) $margin_css = "10px 0px";
@@ -201,46 +183,26 @@ class FacebookWidgetPlus extends WP_Widget{
                }
 </style>
   <div id="fb-root"></div>
-	<script>(function(d, s, id) {
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
-	  fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
         
          <div class="facebook_widget_plus">
 
-	     <div class="fb-like-box" data-href="<?php echo $fb_url;?>"
-         
-           data-width="<?php echo $width;?>" 
-           data-height="<?php echo $height;?>"
-           
-          <?php if($color_scheme == '0') {?>
-                data-colorscheme="light"
-             <?php } else {?> 
-                data-colorscheme="dark"
-             <?php };?>
-             <?php if($face == 'true') {?>
-               data-show-faces="true"
-             <?php } else {?> 
-               data-show-faces="false"
-             <?php };?>
-             <?php if($header =='true') {?>
-               data-header="true" 
-             <?php } else {?> 
-               data-header="false" 
-             <?php };?>  <?php if($border=='true') {?>
-               data-show-border="true"
-             <?php } else {?> 
-               data-show-border="false"
-             <?php };?>
-             <?php if($post == 'true') {?>
-               data-stream="true" 
-             <?php } else {?> 
-               data-stream="false" 
-             <?php };?>
-        </div>
+	     <div class="fb-page" data-href="<?php echo $fb_url;?>"
+             data-width="<?php echo $width;?>"
+             data-height="<?php echo $height;?>" 
+             data-small-header="false" data-adapt-container-width="true" 
+             data-hide-cover="<?php echo $header; ?>" 
+             data-show-facepile="<?php echo $face; ?>" 
+             data-show-posts="<?php echo $post; ?>"><div class="fb-xfbml-parse-ignore">
+                <blockquote cite="<?php echo $fb_url;?>">
+                    <a href="<?php echo $fb_url;?>">Facebook</a></blockquote></div></div>
+		
 	</div>
 	<div class="support" style="font-size: 9px; text-align: right; position: relative; top: -10px;"><a href="//www.hawaiidrive-o.com" title="Click here" target="_blank">HawaiiDrive-O.com</a></div>
 <?php
